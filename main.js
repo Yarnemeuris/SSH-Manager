@@ -29,7 +29,7 @@ const createWindow = () => {
 }
 
 app.whenReady().then(() => {
-    ipcMain.handle("getHosts", () => { return { "hackclub": { "ip": "hackclub.app" } }; })
+    ipcMain.handle("getHosts", () => {return config.hosts})
     createWindow()
 })
 
@@ -38,6 +38,6 @@ app.on('window-all-closed', () => {
 })
 
 if (fs.existsSync("./config.json")) {
-    config = JSON.parse(fs.readFileSync("./config.json", {encoding: "utf8"}))
+    config = JSON.parse(fs.readFileSync("./config.json", { encoding: "utf8" }))
     console.log(config)
 } else console.log("no config");

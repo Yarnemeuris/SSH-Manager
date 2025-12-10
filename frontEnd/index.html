@@ -11,17 +11,30 @@
 </head>
 
 <body>
-    <div class="host">
-        <h3>hackclub</h3>
-        <button type="button" class="edit">
-            <svg fill="none" stroke="currentColor"
-                viewBox="0 0 24 24">
-                <path fill="currentColor"
-                    d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z">
-                </path>
-            </svg>
-        </button>
-        <button type="button" class="connect">connect</button>
+    <div id="hosts">
+        <div class="host" name="hackclub">
+            <h3>hackclub</h3>
+            <button type="button" class="edit">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                        d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z">
+                    </path>
+                </svg>
+            </button>
+            <button type="button" class="connect">connect</button>
+        </div>
+    </div>
+    <button type="button" id="addButton">+</button>
+    <div id="views">
+        <div id="settings" class="hide">
+            <button type="button" name="close">x</button>
+            <div class="setting">label: <input type="text" name="label"></div>
+            <div class="setting">IP: <input type="text" name="IP"></div>
+            <div class="setting">user: <input type="text" name="user"></div>
+            <div class="setting">password: <input type="text" name="password"></div>
+            <div class="setting">port: <input type="text" name="port" value="22"></div>
+            <button type="button" name="add">add</button>
+        </div>
     </div>
 </body>
 
