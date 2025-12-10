@@ -29,11 +29,13 @@ const createWindow = () => {
 }
 
 app.whenReady().then(() => {
-    ipcMain.handle("getHosts", () => {return config.hosts})
+    ipcMain.handle("getHosts", () => config.hosts)
+    ipcMain.handle("addHost", (event, host) => config.hosts.push(host))
     createWindow()
 })
 
 app.on('window-all-closed', () => {
+    fs.writeFileSync("./config.json", JSON.stringify(config))
     if (process.platform !== 'darwin') app.quit()
 })
 
