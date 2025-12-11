@@ -5,7 +5,7 @@ const fs = require('node:fs')
 //const { spawn } = require('node:child_process')
 //const command = spawn("ssh", [], {shell: true, detached: true});
 
-var config = {hosts: {}}
+var config = { hosts: {} }
 
 const createWindow = () => {
     const win = new BrowserWindow({
@@ -28,14 +28,20 @@ const createWindow = () => {
     win.removeMenu()
 }
 
+function save() {
+    fs.writeFileSync("./config.json", JSON.stringify(config));
+}
+
 app.whenReady().then(() => {
     ipcMain.handle("getHosts", () => config.hosts)
-    ipcMain.handle("addHost", (event, name, host) => config.hosts[name] = host)
+    ipcMain.handle("addHost", (event, name, host) => {
+        config.hosts[name] = host;
+    save();
+    })
     createWindow()
 })
 
 app.on('window-all-closed', () => {
-    fs.writeFileSync("./config.json", JSON.stringify(config))
     if (process.platform !== 'darwin') app.quit()
 })
 
