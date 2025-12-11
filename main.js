@@ -2,8 +2,7 @@ const { app, BrowserWindow, ipcMain, globalShortcut } = require('electron')
 
 const path = require('node:path')
 const fs = require('node:fs')
-//const { spawn } = require('node:child_process')
-//const command = spawn("ssh", [], {shell: true, detached: true});
+const { spawn } = require('node:child_process')
 
 var config = { hosts: {} }
 
@@ -36,7 +35,17 @@ app.whenReady().then(() => {
     ipcMain.handle("getHosts", () => config.hosts)
     ipcMain.handle("addHost", (event, name, host) => {
         config.hosts[name] = host;
-    save();
+        save();
+    })
+    ipcMain.handle("connect", (event, name) => {
+        var host = config.hosts[name]
+
+        if (host.password == "") {
+            spawn("ssh", [`${host.user}@${host.IP}`], { shell: true, detached: true });
+            return;
+        }
+
+        spawn("wsl", [`sshpass -p ${host.password} ssh ${host.user}@${host.IP}`], { shell: true, detached: true });
     })
     createWindow()
 })
@@ -47,5 +56,4 @@ app.on('window-all-closed', () => {
 
 if (fs.existsSync("./config.json")) {
     config = JSON.parse(fs.readFileSync("./config.json", { encoding: "utf8" }))
-    console.log(config)
 } else console.log("no config");

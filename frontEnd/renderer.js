@@ -1,7 +1,8 @@
 var hosts = {}
 
 async function getData() {
-    hosts = await window.data.getHosts();
+    hosts = await electronAPI.hosts.get();
+    console
     hostsToHTML();
 }
 
@@ -44,7 +45,7 @@ document.querySelector("#settings>[name='change']").addEventListener("click", ()
         element.value = element.name == "port" ? "22" : "";
     })
 
-    window.data.addHost(settings.label != undefined ? settings.label : settings.IP ,settings);
+    electronAPI.hosts.add(settings.label != undefined ? settings.label : settings.IP ,settings);
     getData();
 
     document.querySelector("#settings").classList.add("hide")
@@ -53,7 +54,7 @@ document.querySelector("#settings>[name='change']").addEventListener("click", ()
 function hostsToHTML() {
     var HTML = ""
     for (var host in hosts) {
-        HTML += `<div class="host" name="${host}"><h3>${host}</h3><button type="button" class="edit" onclick="editHost(event)"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path fill="currentColor" d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"></path></svg></button><button type="button" class="connect">connect</button></div>`;
+        HTML += `<div class="host" name="${host}"><h3>${host}</h3><button type="button" class="edit" onclick="editHost(event)"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path fill="currentColor" d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"></path></svg></button><button type="button" class="connect" onclick="connect(event)">connect</button></div>`;
     }
     document.querySelector("#hosts").innerHTML = HTML
 }
@@ -71,10 +72,15 @@ document.querySelector('#settings>[name="add"]').addEventListener("click", () =>
         element.value = element.name == "port" ? "22" : "";
     })
 
-    window.data.addHost(element.label != undefined ? element.label : element.IP, settings)
+    electronAPI.hosts.add(settings.label != undefined ? settings.label : settings.IP, settings)
     getData();
 
     document.querySelector("#settings").classList.add("hide")
 })
+
+function connect(event){
+    var name = event.target.parentElement.getAttribute('name')
+    electronAPI.hosts.connect(name);
+}
 
 getData()
