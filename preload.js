@@ -2,7 +2,7 @@ const { contextBridge, ipcRenderer } = require('electron')
 
 contextBridge.exposeInMainWorld("data", {
     getHosts: () => ipcRenderer.invoke("getHosts"),
-    addHost: (host) => ipcRenderer.invoke("addHost", host)
+    addHost: (name, host) => ipcRenderer.invoke("addHost", name,  host)
 })
 
 contextBridge.exposeInMainWorld("DEV", {

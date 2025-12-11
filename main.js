@@ -5,7 +5,7 @@ const fs = require('node:fs')
 //const { spawn } = require('node:child_process')
 //const command = spawn("ssh", [], {shell: true, detached: true});
 
-var config = {}
+var config = {hosts: {}}
 
 const createWindow = () => {
     const win = new BrowserWindow({
@@ -30,7 +30,7 @@ const createWindow = () => {
 
 app.whenReady().then(() => {
     ipcMain.handle("getHosts", () => config.hosts)
-    ipcMain.handle("addHost", (event, host) => config.hosts.push(host))
+    ipcMain.handle("addHost", (event, name, host) => config.hosts[name] = host)
     createWindow()
 })
 

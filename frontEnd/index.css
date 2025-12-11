@@ -43,6 +43,7 @@ body {
 
 .host>.edit>* {
     color: rgb(196, 196, 196);
+    pointer-events: none;
 }
 
 .host>.connect {
@@ -102,6 +103,12 @@ body {
 
 #settings>[name="add"] {
     width: 60px;
+    margin-left: calc(50% - 30px);
+    margin-top: 5px;
+}
+
+#settings>[name="change"] {
+    width: 100px;
     margin-left: calc(50% - 30px);
     margin-top: 5px;
 }
